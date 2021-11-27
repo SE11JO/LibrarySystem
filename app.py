@@ -1,17 +1,21 @@
 # -- coding: utf-8 --
 from flask import Flask, request, render_template, session, flash, redirect, url_for
+import config
 
 app = Flask(__name__)
+app.secret_key = 'user_key'
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:
+        if request.form['email'] != config.USERNAME:
             error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:
+            flash('Invalid username')
+        elif request.form['password'] != config.PASSWORD:
             error = 'Invalid password'
+            flash('Invalid password')
         else:
             session['logged_in'] = True
             flash('You were logged in')

@@ -26,6 +26,13 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/util.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/main.css') }}">
 <!--===============================================================================================-->
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			<script>
+				alert("{{messages[-1]}}")
+			</script>
+		{% endif %}
+	{% endwith %}
 </head>
 <body>
 	
@@ -49,14 +56,14 @@
 						<span class="btn-show-pass">
 							<i class="zmdi zmdi-eye"></i>
 						</span>
-						<input class="input100" type="password" name="pass">
+						<input class="input100" type="password" name="password">
 						<span class="focus-input100" data-placeholder="Password"></span>
 					</div>
 
 					<div class="container-login100-form-btn">
 						<div class="wrap-login100-form-btn">
 							<div class="login100-form-bgbtn"></div>
-							<button class="login100-form-btn">
+							<button class="login100-form-btn" type="submit" formmethod="POST">
 								Login
 							</button>
 						</div>
@@ -70,12 +77,14 @@
 						<a class="txt2" href="{{ url_for('sign_up') }}">
 							Sign Up
 						</a>
+
+
+
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-	
 
 	<div id="dropDownSelect1"></div>
 	
