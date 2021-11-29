@@ -21,20 +21,19 @@ def create_book():
 
 @app.route('/insert_db', methods=['POST'])
 def insert_db():
+    id = request.form['id']
     title = request.form['title']
     author = request.form['author']
     publish = request.form['publish']
 
-    suc = met.put_table(title, author, publish)
+    suc = met.put_table(id, title, author, publish)
 
-    if suc :
-        result = 'success'
-    else :
-        result = 'fail'
-    return print(result)
+    return render_template('insert_db.html')
 
 @app.route('/update_book')
 def update():
+
+    
     return met.select_all('library')
 
 if __name__ == '__main__':

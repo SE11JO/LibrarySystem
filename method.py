@@ -3,7 +3,7 @@ import boto3
 from botocore.exceptions import ClientError
 
 
-def put_table(title, author, publish, dynamodb=None):
+def put_table(id, title, author, publish, dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
@@ -14,10 +14,12 @@ def put_table(title, author, publish, dynamodb=None):
     table = dynamodb.Table('library')
     response = table.put_item(
         Item={
+            'id': id,
             'title': title,
             'author': author,
             'publish': publish,
             'rental': True,
+            'ren_name': '',
             'ren_date': ''
         }
     )
