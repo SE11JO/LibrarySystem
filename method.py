@@ -1,6 +1,10 @@
 from pprint import pprint
 import boto3
+import json
 from botocore.exceptions import ClientError
+from flask.wrappers import Response
+from werkzeug.wrappers import response
+from flask import jsonify
 
 
 def put_table(id, title, author, publish, dynamodb=None):
@@ -40,7 +44,7 @@ def get_table(dynamodb=None):
     return response
 
 
-def select_all(table_name, dynamodb=None):
+def select_all(dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
@@ -48,9 +52,31 @@ def select_all(table_name, dynamodb=None):
             aws_secret_access_key='FpAzZ6omOVMmYFXa8kGjZHpt9Ecdr2Iyh8QkHGyt',
             region_name='ap-northeast-2')
 
-    table = dynamodb.Table(table_name)
+    table = dynamodb.Table('library')
     response = table.scan()
     data = response['Items']
-    return print(data)
 
-    
+    return jsonify(data)
+
+
+def update_table(id, title, author, publish, rental, ren_date, dynamodb=None):
+    if not dynamodb:
+        dynamodb = boto3.resource(
+            'dynamodb',
+            aws_access_key_id='AKIARKVEYCRB5V6OTNXL',
+            aws_secret_access_key='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',
+            region_name='ap-northeast-2')
+
+    table = dynamodb.Table('library')
+
+    response = table.update_item(
+        Key={
+            'id': id,
+            'title': title,
+            'author': author,
+            'publish': publish,
+            'rental': rental,
+            'ren_date': ren_date
+        }
+    )
+    return response

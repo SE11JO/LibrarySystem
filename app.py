@@ -1,6 +1,14 @@
+import re
 from flask import Flask, render_template, request
 from boto3.dynamodb.conditions import Key, Attr
 import method as met
+from pprint import pprint
+import boto3
+import json
+from botocore.exceptions import ClientError
+from flask.wrappers import Response
+from werkzeug.wrappers import response
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -30,11 +38,25 @@ def insert_db():
 
     return render_template('insert_db.html')
 
-@app.route('/update_book')
-def update():
+@app.route('/list_book')
+def list_book():
+    response = met.select_all()
+    return render_template('list_book.html', response = response)
 
-    
-    return met.select_all('library')
+@app.route('/update_db')
+def update_db():
+    id = request.form['id']
+    title = request.form['title']
+    author = request.form['author']
+    publish = request.form['publish']
+    rental = request.form['rental']
+    ren_date = request.form['ren_date']
+
+    suc = met.update_table(id, title, author, publish, rental, ren_date)
+
+    return render_template('update_db.html')
+
+
 
 if __name__ == '__main__':
     app.run()
