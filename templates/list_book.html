@@ -4,13 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>도서관 책 리스트 페이지</title>
+    <style>
+        td {
+            padding: 5px;
+        }
+    </style>
 </head>
 
 <body>
     <h1>보유 책 리스트</h1>
     <form action="" method="GET">
         <table border="2">
-            <tr>
+            <tr align="center">
                 <td>책 ID</td>
                 <td>책 이름</td>
                 <td>저자</td>
@@ -19,19 +24,23 @@
                 <td>대여 일자</td>
                 <td>대여한 사람</td>
             </tr>
-            <tr>
-                <td>{{ id }}</td>
-                <td>{{ id }}</td>
-                <td>{{ id }}</td>
-                <td>{{ id }}</td>
-                <td>{{ id }}</td>
-                <td>{{ id }}</td>
+            {% for c in object %}
+            <tr align="center">
+                <td>{{ c.id }}</td>
+                <td>{{ c.title }}</td>
+                <td>{{ c.author }}</td>
+                <td>{{ c.publish }}</td>
+                <td>{{ c.rental }}</td>
+                <td>{{ c.ren_date }}</td>
+                <td>{{ c.ren_name }}</td>
             </tr>
+            {% endfor %}
             <tr>
-                <td colspan="7" onclick><button>수정하기</button></td>
+                <td colspan="7" align="right"><button>수정하기</button></td>
             </tr>
         </table>
     </form>
+    <button onclick="location.href='/'">돌아가기</button>
 </body>
 
 </html>

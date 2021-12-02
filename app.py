@@ -13,6 +13,7 @@ from flask import jsonify
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -39,11 +40,15 @@ def insert_db():
 
     return render_template('insert_db.html')
 
+
 @app.route('/list_book')
 def list_book():
     response = met.select_all()
+    json_string = json.dumps(response, ensure_ascii=False)
+    json_object = json.loads(json_string)
 
-    return jsonify(response)
+    return render_template('/list_book.html', object=json_object)
+
 
 @app.route('/update_db')
 def update_db():
@@ -57,7 +62,6 @@ def update_db():
     suc = met.update_table(id, title, author, publish, rental, ren_date)
 
     return render_template('update_db.html')
-
 
 
 if __name__ == '__main__':
