@@ -1,0 +1,4 @@
+#aws access key
+AWS_ACCESS_KEY_ID = 'AKIATYB5WW446MVEQFHP'
+AWS_SECRET_ACCESS_KEY = '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'
+REGION_NAME = 'ap-northeast-2'
