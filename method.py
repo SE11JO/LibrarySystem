@@ -56,7 +56,7 @@ def select_all(dynamodb=None):
     response = table.scan()
     data = response['Items']
 
-    return jsonify(data)
+    return data
 
 
 def update_table(id, title, author, publish, rental, ren_date, dynamodb=None):

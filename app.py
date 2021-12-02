@@ -11,6 +11,7 @@ from werkzeug.wrappers import response
 from flask import jsonify
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 
 @app.route('/')
 def index():
@@ -41,7 +42,8 @@ def insert_db():
 @app.route('/list_book')
 def list_book():
     response = met.select_all()
-    return render_template('list_book.html', response = response)
+
+    return jsonify(response)
 
 @app.route('/update_db')
 def update_db():
