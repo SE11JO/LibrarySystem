@@ -1,19 +1,12 @@
 # -- coding: utf-8 --
 from flask import Flask, request, render_template, session, flash, redirect, url_for
-import config
 import controller as dynamodb
 
 app = Flask(__name__)
 app.secret_key = 'user_key'
 
 
-@app.route('/')
-def index():
-    dynamodb.create_table_user()
-    return 'Table Created!'
-
-
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     error = None
     if request.method == 'POST':
@@ -28,6 +21,8 @@ def login():
                     flash('Invalid password')
                 else:
                     session['logged_in'] = True
+                    session['user'] = request.form['email']
+
                     flash('You are logged in as {}, Welcome!'.format(response['Item']['Name']))
                     return redirect(url_for('login'))
             else:

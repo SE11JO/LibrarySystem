@@ -4,6 +4,7 @@ import config
 AWS_ACCESS_KEY_ID = config.AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = config.AWS_SECRET_ACCESS_KEY
 REGION_NAME = config.REGION_NAME
+USER_TABLE_NAME = config.USER_TABLE_NAME
 
 resource = resource(
     'dynamodb',
@@ -15,7 +16,7 @@ resource = resource(
 
 def create_table_user():
     table = resource.create_table(
-        TableName='Library-System-UserTable',  # Name of the table
+        TableName=USER_TABLE_NAME,  # Name of the table
         KeySchema=[
             {
                 'AttributeName': 'Email',
