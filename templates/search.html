@@ -1,9 +1,41 @@
+<!doctype html>
 <html>
-   <body>
-   
-      <form action = "http://localhost:5000/result" method = "POST">
-         <p>자료검색 <input type = "text" name = "title" /> <input type = "submit" value = "검색" /> </p>
-      </form>
-      
-   </body>
+    <body>
+        <h1></h1>
+
+        <form action = "/search" method = "POST">
+            <p>자료검색 <input type = "text" name = "title" /> <input type = "submit" value = "검색" /> </p>
+         </form>
+
+        <form action="/search" method="POST">
+            <table border = 3>
+                <tr align="center">
+                    <td width = 6%>책 ID</td>
+                    <td width = 24%>책 이름</td>
+                    <td width = 12%>저자</td>
+                    <td width = 12%>출판사</td>
+                    <td width = 5%>대여 여부</td>
+                    <td width = 12%>대여 일자</td>
+                    <td width = 12%>대여한 사람</td>
+                </tr>
+                {% if data != none%}
+                    {% for list in data %}
+                        <tr align="center">
+                            <td>{{ list.id }}</td>
+                            <td>{{ list.title }}</td>
+                            <td>{{ list.author }}</td>
+                            <td>{{ list.publish }}</td>
+                            <td>{{ list.rental }}</td>
+                            <td>{{ list.ren_date }}</td>
+                            <td>{{ list.ren_name }}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </form>
+        <tr></tr>
+        <tr></tr>
+        <button onclick="location.href='/'">뒤로가기</button>
+    </body>
 </html>
+

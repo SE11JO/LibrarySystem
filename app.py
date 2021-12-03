@@ -6,19 +6,18 @@ import json
 app = Flask(__name__)
 
 @app.route('/search', methods = ['GET', 'POST'])
-def home():
-
-    return render_template('search.html')
-
-@app.route('/result', methods = ['GET', 'POST'])
-def result():
+def search():
+    data = None
     if request.method == 'POST':
         Title = request.form['title']
-        response = controller.search_library_book(Title)
-        json_string = json.dumps(response, ensure_ascii=False)
-        json_object = json.loads(json_string)
+        if Title != '' :
+            response = controller.search_library_book(Title)
+            dumps = json.dumps(response, ensure_ascii=False)
+            data = json.loads(dumps)
 
-        return render_template('result.html', data=json_object)
+        return render_template('search.html', data=data)
+
+    return render_template('search.html', data=data)    
 
 
 if __name__ == '__main__':
