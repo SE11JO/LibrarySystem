@@ -1,40 +1,63 @@
 <!doctype html>
-<html>
+
+<html lang = "ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>검색</title>
+        <link rel = "stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.css')}}">
+    </head>
+
     <body>
         <h1></h1>
-
-        <form action = "/search" method = "POST">
-            <p>자료검색 <input type = "text" name = "title" /> <input type = "submit" value = "검색" /> </p>
-         </form>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="collapse navbar-collapse" id="navbarColor02">
+                <form action = "/search" class = "d-flex" method = "POST">
+                    <input class = "form-control me-sm-2 mx-3" type = "text" name = "title" placeholder="자료검색" size = 100 style="vertical-align: bottom;">
+                    <button class="btn btn-secondary my-2 my-sm-0" type = "submit">
+                        search
+                    </button>
+                 </form>
+            </div>
+        </nav>
 
         <form action="/search" method="POST">
-            <table border = 3>
-                <tr align="center">
-                    <td width = 6%>책 ID</td>
-                    <td width = 24%>책 이름</td>
-                    <td width = 12%>저자</td>
-                    <td width = 12%>출판사</td>
-                    <td width = 5%>대여 여부</td>
-                    <td width = 12%>대여 일자</td>
-                    <td width = 12%>대여한 사람</td>
-                </tr>
-                {% if data != none%}
-                    {% for list in data %}
-                        <tr align="center">
-                            <td>{{ list.id }}</td>
-                            <td>{{ list.title }}</td>
-                            <td>{{ list.author }}</td>
-                            <td>{{ list.publish }}</td>
-                            <td>{{ list.rental }}</td>
-                            <td>{{ list.ren_date }}</td>
-                            <td>{{ list.ren_name }}</td>
-                        </tr>
-                    {% endfor %}
-                {% endif %}
+            <table class="table table-hover my-2" border = 3>
+                <thead>
+                    <tr class = "table-secondary" align="center">
+                        <th scope="col" width = 6%>선택</th>
+                        <th scope="col" width = 6%>책 ID</th>
+                        <th scope="col" width = 24%>책 이름</th>
+                        <th scope="col" width = 12%>저자</th>
+                        <th scope="col" width = 12%>출판사</th>
+                        <th scope="col" width = 10%>대여 여부</th>
+                        <th scope="col" width = 12%>대여 일자</th>
+                        <th scope="col" width = 12%>대여한 사람</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% if data != none%}
+                        {% for list in data %}
+                            <tr align="center">
+                                <th scope = "row"><input type = "checkbox" value = "{{list.id}}" name = "check"></td>
+                                <td>{{ list.id }}</td>
+                                <td>{{ list.title }}</td>
+                                <td>{{ list.author }}</td>
+                                <td>{{ list.publish }}</td>
+                                <td>{{ list.rental }}</td>
+                                <td>{{ list.ren_date }}</td>
+                                <td>{{ list.ren_name }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
             </table>
+
+            <button type="submit" class="btn btn-secondary my-2 my-sm-0">대출신청</button>
+            <button class="btn btn-secondary my-2 my-sm-0 mx-1" onclick="location.href='/'">뒤로가기</button>
+
         </form>
-        <br>
-        <button onclick="location.href='/'">뒤로가기</button>
+        
     </body>
 </html>
 
