@@ -25,13 +25,5 @@ def search():
 
     return render_template('search.html', data=data)    
 
-
-@app.route('/search/take', methods = ['GET','POST'])
-def take():
-    if request.method == 'POST':
-        is_checked = request.form.get('check')
-    return render_template('search.html')
-
-
 if __name__ == '__main__':
     app.run()
