@@ -6,6 +6,7 @@ import config
 AWS_ACCESS_KEY_ID = config.AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = config.AWS_SECRET_ACCESS_KEY
 REGION_NAME = config.REGION_NAME
+BOOK_TABLE_NAME = config.BOOK_TABLE_NAME
 
 resource = boto3.resource(
     'dynamodb',
@@ -14,7 +15,7 @@ resource = boto3.resource(
     region_name=REGION_NAME
 )
 
-table = resource.Table('Library')
+table = resource.Table(BOOK_TABLE_NAME)
 
 
 def search_library_book (book_title) :
