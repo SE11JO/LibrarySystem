@@ -25,6 +25,7 @@
                 <td>대여 여부</td>
                 <td>대여 일자</td>
                 <td>대여한 사람</td>
+                <td></td>
             </tr>
             {% for c in object %}
             <tr align="center">
@@ -36,7 +37,7 @@
                 <td>{{ c.rental }}</td>
                 <td>{{ c.ren_date }}</td>
                 <td>{{ c.ren_name }}</td>
-                <td><button>수정</button></td>
+                <td><button class="btn btn-secondary my-2 my-sm-0">수정</button></td>
             </tr>
             {% endfor %}
         </table>
