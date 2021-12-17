@@ -8,13 +8,13 @@ REGION_NAME = config.REGION_NAME
 USER_TABLE_NAME = config.USER_TABLE_NAME
 BOOK_TABLE_NAME = config.BOOK_TABLE_NAME
 
-
 resource = resource(
     'dynamodb',
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     region_name=REGION_NAME
 )
+
 
 def create_table_user():
     table = resource.create_table(
@@ -69,8 +69,8 @@ def read_user_information(email):
 
 table = resource.Table(BOOK_TABLE_NAME)
 
-def search_library_book (book_title) :
-    
+
+def search_library_book(book_title):
     response = table.scan(
         FilterExpression=Attr('title').contains(book_title)
     )
@@ -79,41 +79,25 @@ def search_library_book (book_title) :
 
     return items
 
+
 def change_rental_status(title, ren_name, ren_date):
-
-table = resource.Table('Library')
-
-def return_book(title):
-
     response = table.update_item(
-        Key = {
-            'title'    :title
+        Key={
+            'title': title
         },
 
-        AttributeUpdates = {
-            'rental' : {
-
-                'Value'     : False,
-                'Action'    : 'PUT'
+        AttributeUpdates={
+            'rental': {
+                'Value': False,
+                'Action': 'PUT'
             },
-            'ren_name' : {
-                'Value'     : ren_name,
-                'Action'    : 'PUT'
+            'ren_name': {
+                'Value': ren_name,
+                'Action': 'PUT'
             },
-            'ren_date' : {
-                'Value'     : ren_date,
-
-                'Value'     : True,
-                'Action'    : 'PUT'
-            },
-            'ren_name' : {
-                'Value'     : 'none',
-                'Action'    : 'PUT'
-            },
-            'ren_date' : {
-                'Value'     : 'none',
-
-                'Action'    : 'PUT'
+            'ren_date': {
+                'Value': ren_date,
+                'Action': 'PUT'
             }
         }
     )
@@ -122,15 +106,16 @@ def return_book(title):
 
 def check_rental_possible(title):
     response = table.get_item(
-        Key = {
-            'title'    :title
+        Key={
+            'title': title
         },
         AttributesToGet=[
             'rental'
         ]
     )
     return response
-    #렌탈 가능할때 true
+    # 렌탈 가능할때 true
+
 
 def rental_search_book(ren_name):
     response = table.scan(
@@ -138,6 +123,5 @@ def rental_search_book(ren_name):
     )
 
     items = response['Items']
-    
-    return items
 
+    return items

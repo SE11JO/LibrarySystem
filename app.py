@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask, request, render_template, session, flash, redirect, url_for
 import controller as dynamodb
 import method as met
@@ -50,16 +49,18 @@ def sign_up():
         if response['ResponseMetadata']['HTTPStatusCode'] == 200:
             return redirect(url_for('login'))
         return {
-            'msg': 'Some error occcured',
+            'msg': 'Some error occured',
             'response': response
         }
     return render_template('sign_up.html', error=error)
+
 
 @app.route('/main')
 def main():
     return render_template('main.html')
 
-@app.route('/main/manage')
+
+@app.route('/manage')
 def manage():
     response = met.select_all()
     json_string = json.dumps(response, ensure_ascii=False)
@@ -67,9 +68,11 @@ def manage():
 
     return render_template('manage.html', object=json_object)
 
-@app.route('/main/manage/create')
+
+@app.route('/manage/create')
 def create():
     return render_template('create.html')
+
 
 @app.route('/insert_db', methods=['POST'])
 def insert_db():
@@ -82,11 +85,12 @@ def insert_db():
 
     return render_template('insert_db.html')
 
-@app.route('/main/manage/update', methods=["POST", "GET"])
+
+@app.route('/manage/update', methods=["POST", "GET"])
 def update():
     title = request.form["c_title"]
     print(title)
-    if title==None:
+    if title == None:
         return render_template('manage.html')
 
     response = met.get_book(title)
@@ -94,6 +98,7 @@ def update():
     json_object = json.loads(json_string)
 
     return render_template('update.html', object=json_object, title=title)
+
 
 @app.route('/update_db', methods=["POST"])
 def update_db():
@@ -111,6 +116,7 @@ def update_db():
     met.update_table(b_title, id, title, author, publish, rental, ren_date, ren_name)
 
     return render_template('update_db.html')
+
 
 @app.route('/delete_db/<string:d_title>', methods=["GET"])
 def delete_db(d_title):
@@ -166,6 +172,7 @@ def return_book():
         return render_template('return.html', data=data)
 
     return render_template('return.html', data=data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
