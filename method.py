@@ -61,7 +61,7 @@ def select_all(dynamodb=None):
     return data
 
 
-def update_table(id, title, author, publish, rental, ren_date, ren_name, dynamodb=None):
+def update_table(b_title, id, title, author, publish, rental, ren_date, ren_name, dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
@@ -70,22 +70,43 @@ def update_table(id, title, author, publish, rental, ren_date, ren_name, dynamod
             region_name='ap-northeast-2')
 
     table = dynamodb.Table('library')
-
+    print(b_title)
     response = table.update_item(
         Key={
-            'id': id,
-            'title': title,
-            'author': author,
-            'publish': publish,
-            'rental': rental,
-            'ren_date': ren_date,
-            'ren_name': ren_name
+            'title':b_title
+        },
+        AttributeUpdates = {
+            'id' : {
+                'Value' : id,
+                'Action' : 'PUT'
+            },
+            'author' : { 
+                'Value' : author,
+                'Action' : 'PUT'
+            },
+            'publish' : { 
+                'Value' : publish,
+                'Action' : 'PUT'
+            },
+            'rental' : { 
+                'Value' : rental,
+                'Action' : 'PUT'
+            },
+            'ren_date' : { 
+                'Value' : ren_date,
+                'Action' : 'PUT'
+            },
+            'ren_name' : { 
+                'Value' : ren_name,
+                'Action' : 'PUT'
+            }
+
         }
     )
     return response
 
 
-def get_book(id, dynamodb=None):
+def get_book(title, dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
@@ -96,14 +117,14 @@ def get_book(id, dynamodb=None):
     table = dynamodb.Table('library')
 
     response = table.scan(
-        FilterExpression=Attr('id').contains(id)
+        FilterExpression=Attr('title').contains(title)
     )
 
     items = response['Items']
     return items
 
 
-def delete_table(id, dynamodb=None):
+def delete_table(title, dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
@@ -116,7 +137,7 @@ def delete_table(id, dynamodb=None):
     try:
         response=table.delete_item(
             Key={
-                'id':id
+                'title':title
             }
         )
     except ClientError as e:

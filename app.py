@@ -42,19 +42,20 @@ def insert_db():
 
 @app.route('/manage/update', methods=["POST", "GET"])
 def update():
-    id = request.form.get['c_id']
-    print(id)
-    if id==None:
+    title = request.form["c_title"]
+    print(title)
+    if title==None:
         return render_template('manage.html')
 
-    response = met.get_book(id)
+    response = met.get_book(title)
     json_string = json.dumps(response, ensure_ascii=False)
     json_object = json.loads(json_string)
 
-    return render_template('update.html', object=json_object)
+    return render_template('update.html', object=json_object, title=title)
 
-@app.route('/update_db')
+@app.route('/update_db', methods=["POST"])
 def update_db():
+    b_title = request.form['c_title']
     id = request.form['id']
     title = request.form['title']
     author = request.form['author']
@@ -63,15 +64,17 @@ def update_db():
     ren_date = request.form['ren_date']
     ren_name = request.form['ren_name']
 
-    met.update_table(id, title, author, publish, rental, ren_date, ren_name)
+    print(b_title)
+
+    met.update_table(b_title, id, title, author, publish, rental, ren_date, ren_name)
 
     return render_template('update_db.html')
 
 @app.route('/manage/delete', methods=["GET"])
 def delete_db():
-    id = request.form['c_title']
-    print(id)
-    met.delete_table(id)
+    title = request.form['c_title']
+    print(title)
+    met.delete_table(title)
 
     return render_template('delete_db.html')
 

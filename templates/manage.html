@@ -16,7 +16,7 @@
     <div>
         <button onclick="location.href='/manage/create'">생성</button>
     </div>
-    <form action="manage/update" methods="GET">
+        <form action="/manage/update" method="POST">
         <table border="2">
             <tr align="center">
                 <td></td>
@@ -30,7 +30,7 @@
             </tr>
             {% for c in object %}
             <tr align="center">
-                <td><input type="checkbox" name="c_id" value="{{ c.id }}"></td>
+                <td><input type="checkbox" name="c_title" value="{{ c.title }}"></td>
                 <td>{{ c.id }}</td>
                 <td>{{ c.title }}</td>
                 <td>{{ c.author }}</td>
@@ -39,7 +39,6 @@
                 <td>{{ c.ren_date }}</td>
                 <td>{{ c.ren_name }}</td>
                 <td><button>수정</button></td>
-                <td><button onclick="location.href='/manage/delete?'">삭제</button></td>
             </tr>
             {% endfor %}
         </table>
