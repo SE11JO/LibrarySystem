@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html lang = "ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>대여목록</title>
+        <link rel = "stylesheet" href="{{ url_for('static', filename = 'css/bootstrap.css')}}">
+    </head>
+
+    <body>
+        <form action="/return_book" method="POST">
+            <table class="table table-hover my-2" border = 3>
+                <thead>
+                    <tr class = "table-secondary" align="center">
+                        <th scope="col" width = 6%>선택</th>
+                        <th scope="col" width = 6%>책 ID</th>
+                        <th scope="col" width = 24%>책 이름</th>
+                        <th scope="col" width = 12%>저자</th>
+                        <th scope="col" width = 12%>출판사</th>
+                        <th scope="col" width = 12%>대여 일자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data != none%}
+                        {% for list in data %}
+                            <tr align="center">
+                                <th scope = "row"><input type = "checkbox" value = "{{list.title}}" name = "check"></td>
+                                <td>{{ list.id }}</td>
+                                <td>{{ list.title }}</td>
+                                <td>{{ list.author }}</td>
+                                <td>{{ list.publish }}</td>
+                                <td>{{ list.ren_date }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-secondary my-2 my-sm-0">반납</button>
+            <button class="btn btn-secondary my-2 my-sm-0 mx-1" onclick="location.href='/'">뒤로가기</button>
+        </form>
+        
+    </body>
+</html>

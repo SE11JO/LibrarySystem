@@ -1,4 +1,6 @@
+import boto3
 from boto3 import resource
+from boto3.dynamodb.conditions import Key, Attr
 import config
 
 AWS_ACCESS_KEY_ID = config.AWS_ACCESS_KEY_ID
@@ -12,23 +14,12 @@ resource = resource(
     region_name=REGION_NAME
 )
 
-table = resource.Table('books')
+table = resource.Table('Library')
 
-def read_books(id):
+def check_rental_possible(title):
     response = table.get_item(
         Key = {
-            'id'    :id
-        },
-        AttributesToGet=[
-            'title'
-        ]
-    )
-    return response
-
-def check_rental_possible(id):
-    response = table.get_item(
-        Key = {
-            'id'    :id
+            'title'    :title
         },
         AttributesToGet=[
             'rental'
@@ -37,10 +28,10 @@ def check_rental_possible(id):
     return response
     #렌탈 가능할때 true
 
-def change_rental_status(id, ren_name):
+def change_rental_status(title, ren_name):
     response = table.update_item(
         Key = {
-            'id'    :id
+            'title'    :title
         },
 
         AttributeUpdates = {
@@ -56,10 +47,10 @@ def change_rental_status(id, ren_name):
     )
     return response
 
-def return_book(id):
+def return_book(title):
     response = table.update_item(
         Key = {
-            'id'    :id
+            'title'    :title
         },
 
         AttributeUpdates = {
@@ -70,8 +61,20 @@ def return_book(id):
             'ren_name' : {
                 'Value'     : 'none',
                 'Action'    : 'PUT'
+            },
+            'ren_date' : {
+                'Value'     : 'none',
+                'Action'    : 'PUT'
             }
         }
     )
     return response
 
+def rental_search_book(ren_name):
+    response = table.scan(
+        FilterExpression=Attr('ren_name').eq(ren_name)
+    )
+
+    items = response['Items']
+    
+    return items
