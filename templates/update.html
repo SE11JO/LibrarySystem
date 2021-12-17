@@ -10,23 +10,23 @@
     <h1>수정할 정보를 입력하세요</h1>
     <form action="/update_db" method="POST">
         <input type="hidden" name="c_title" value="{{ title }}">
-        책 ID : <input type="text" name="id" placeholder="{{ object.id }}">
+        책 ID : <input type="text" name="id">
         <br>
-        책 이름 : <input type="text" name="title" placeholder="{{ object.title }}">
+        책 이름 : <input type="text" name="title">
         <br>
-        책 저자 : <input type="text" name="author" placeholder="{{ object.author }}">
+        책 저자 : <input type="text" name="author">
         <br>
-        출판사 : <input type=" text" name="publish" placeholder="{{ object.publish }}">
+        출판사 : <input type=" text" name="publish">
         <br>
         대여 여부 : <input type="radio" value="True" name="rental" checked>가능
                     <input type="radio" value="False" name="rental">불가능
         <br>
-        대여 날짜 : <input type="date" name="ren_date" placeholder="{{ object.ren_date }}">
+        대여 날짜 : <input type="date" name="ren_date">
         <br>
-        대여자 이름 : <input type="text" name="ren_name" placeholder="{{ object.ren_name }}">
+        대여자 이름 : <input type="text" name="ren_name">
         <input type="submit" value="수정">
     </form>
-    <button onclick="location.href='/manage/delete'">삭제</button>
+    <a href="{{ url_for('delete_db', d_title=title) }}">삭제</a>
 </body>
 
 </html>

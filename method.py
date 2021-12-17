@@ -134,16 +134,10 @@ def delete_table(title, dynamodb=None):
 
     table = dynamodb.Table('library')
 
-    try:
-        response=table.delete_item(
+    response=table.delete_item(
             Key={
                 'title':title
             }
         )
-    except ClientError as e:
-        if e.response['Error']['Code'] == "ConditionalCheckFailedException":
-            print(e.response['Error']['Message'])
-        else:
-            raise
-    else:
-        return response
+ 
+    return response

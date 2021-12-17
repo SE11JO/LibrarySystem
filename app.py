@@ -70,9 +70,9 @@ def update_db():
 
     return render_template('update_db.html')
 
-@app.route('/manage/delete', methods=["GET"])
-def delete_db():
-    title = request.form['c_title']
+@app.route('/delete_db/<string:d_title>', methods=["GET"])
+def delete_db(d_title):
+    title = d_title
     print(title)
     met.delete_table(title)
 
