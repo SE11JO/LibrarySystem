@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  </head>
+  <body>
+  <form>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="1" name="flexCheckDefault">
+        <label class="form-check-label" for="flexCheckDefault">
+          Default checkbox
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="2" name="flexCheckChecked" checked="">
+        <label class="form-check-label" for="flexCheckChecked">
+          Checked checkbox
+        </label>
+      </div>
+      <input type="submit" class="btn btn-primary">
+    </form>
+</body>
+</html>

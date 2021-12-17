@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from flask import Flask, request, render_template, session, flash, redirect, url_for
 import controller as dynamodb
 import method as met
@@ -145,5 +146,27 @@ def search():
     return render_template('search.html', data=data)
 
 
+@app.route('/return_book', methods=['GET', 'POST'])
+def return_book():
+    data = None
+    response = dynamodb.rental_search_book(session['user'])
+    dumps = json.dumps(response, ensure_ascii=False)
+    data = json.loads(dumps)
+
+    if request.method == 'POST':
+        list = request.form.getlist('check')
+
+        for i in list:
+            response = dynamodb.return_book(i)
+
+        response = dynamodb.rental_search_book(session['user'])
+        dumps = json.dumps(response, ensure_ascii=False)
+        data = json.loads(dumps)
+
+        return render_template('return.html', data=data)
+
+    return render_template('return.html', data=data)
+
 if __name__ == '__main__':
     app.run(debug=True)
+
