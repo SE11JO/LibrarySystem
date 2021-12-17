@@ -20,7 +20,7 @@ def rental_book():
 @app.route('/return_book', methods=['GET', 'POST'])
 def return_book():
     data = None
-    response = controller.rental_search_book('me')
+    response = controller.rental_search_book(session['user'])
     dumps = json.dumps(response, ensure_ascii = False)
     data = json.loads(dumps)
 
@@ -31,7 +31,7 @@ def return_book():
 
             response = controller.return_book(i)
 
-        response = controller.rental_search_book('me')
+        response = controller.rental_search_book(session['user'])
         dumps = json.dumps(response, ensure_ascii = False)
         data = json.loads(dumps)
 
