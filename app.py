@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+from datetime import date
 import controller
 import json
 
 
 app = Flask(__name__)
+app.secret_key = '1234'
 
-@app.route('/search', methods = ['GET', 'POST'])
+@app.route('/manage/search', methods = ['GET', 'POST'])
 def search():
     data = None
     if request.method == 'POST':
@@ -17,10 +19,17 @@ def search():
                 dumps = json.dumps(response, ensure_ascii=False)
                 data = json.loads(dumps)
 
-                return render_template('search.html', data=data)
-
         elif request.form.get('check') != None :
             is_checked = request.form.getlist('check')
+
+            for i in is_checked:
+                today = date.today()
+                today = today.strftime("%Y-%m-%d") 
+                response = controller.change_rental_status(i, "name", today)
+            flash('대출되었습니다.')
+            return render_template('search.html')    
+
+
 
     return render_template('search.html', data=data)    
 

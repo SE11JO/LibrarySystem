@@ -27,3 +27,39 @@ def search_library_book (book_title) :
     items = response['Items']
 
     return items
+
+def change_rental_status(title, ren_name, ren_date):
+    response = table.update_item(
+        Key = {
+            'title'    :title
+        },
+
+        AttributeUpdates = {
+            'rental' : {
+                'Value'     : False,
+                'Action'    : 'PUT'
+            },
+            'ren_name' : {
+                'Value'     : ren_name,
+                'Action'    : 'PUT'
+            },
+            'ren_date' : {
+                'Value'     : ren_date,
+                'Action'    : 'PUT'
+            }
+        }
+    )
+    return response
+
+def check_rental_possible(title):
+    response = table.get_item(
+        Key = {
+            'title'    :title
+        },
+        AttributesToGet=[
+            'rental'
+        ]
+    )
+    return response
+    #렌탈 가능할때 true
+
