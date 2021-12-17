@@ -1,15 +1,8 @@
-# -- coding: utf-8 --
 from flask import Flask, request, render_template, session, flash, redirect, url_for
 import controller as dynamodb
-from boto3.dynamodb.conditions import Key, Attr
 import method as met
-from pprint import pprint
-import boto3
 import json
-from botocore.exceptions import ClientError
-from flask.wrappers import Response
-from werkzeug.wrappers import response
-from flask import jsonify
+from datetime import date
 
 app = Flask(__name__)
 app.secret_key = 'user_key'
@@ -125,6 +118,32 @@ def delete_db(d_title):
     met.delete_table(title)
 
     return render_template('delete_db.html')
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    data = None
+    if request.method == 'POST':
+        if request.form.get('title') != None:
+            Title = request.form['title']
+
+            if Title != '':
+                response = dynamodb.search_library_book(Title)
+                dumps = json.dumps(response, ensure_ascii=False)
+                data = json.loads(dumps)
+
+        elif request.form.get('check') != None:
+            is_checked = request.form.getlist('check')
+
+            for i in is_checked:
+                today = date.today()
+                today = today.strftime("%Y-%m-%d")
+                response = dynamodb.change_rental_status(i, "name", today)
+            flash('대출되었습니다.')
+            return render_template('search.html')
+
+    return render_template('search.html', data=data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
