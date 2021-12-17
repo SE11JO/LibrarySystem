@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>도서관 책 리스트 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
     <style>
         td {
             padding: 5px;
@@ -13,12 +14,9 @@
 
 <body>
     <h1>보유 책 리스트</h1>
-    <div>
-        <button onclick="location.href='/manage/create'">생성</button>
-    </div>
         <form action="/manage/update" method="POST">
-        <table border="2">
-            <tr align="center">
+        <table class="table table-hover my-2" border="3">
+            <tr class="table-secondary" align="center">
                 <td></td>
                 <td>책 ID</td>
                 <td>책 이름</td>
@@ -43,7 +41,8 @@
             {% endfor %}
         </table>
     </form>
-    <button onclick="location.href='/'">돌아가기</button>
+    <button class="btn btn-secondary my-2 my-sm-0" onclick="location.href='/manage/create'">생성</button>
+    <button class="btn btn-secondary my-2 my-sm-0" onclick="location.href='/'">돌아가기</button>
 </body>
 
 </html>
