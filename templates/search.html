@@ -39,7 +39,12 @@
                     {% if data != none%}
                         {% for list in data %}
                             <tr align="center">
-                                <th scope = "row"><input type = "checkbox" value = "{{list.id}}" name = "check"></td>
+                                {% if list.rental != false %}
+                                    <th scope = "row"><input type = "checkbox" value = "{{list.title}}" name = "check"></td>
+                                {% else %}
+                                    <th scope = "row"><input type = "checkbox" value = "{{list.title}}" name = "check" disabled></td>
+                                {% endif %}
+
                                 <td>{{ list.id }}</td>
                                 <td>{{ list.title }}</td>
                                 <td>{{ list.author }}</td>
@@ -52,8 +57,8 @@
                     {% endif %}
                 </tbody>
             </table>
-
-            <button type="submit" class="btn btn-secondary my-2 my-sm-0">대출신청</button>
+            
+            <button type="submit" onclick="alert('대출되었습니다');" class="btn btn-secondary my-2 my-sm-0">대출신청</button>
             <button class="btn btn-secondary my-2 my-sm-0 mx-1" onclick="location.href='/'">뒤로가기</button>
 
         </form>

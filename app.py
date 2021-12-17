@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import controller
 import json
 
@@ -21,9 +21,9 @@ def search():
 
         elif request.form.get('check') != None :
             is_checked = request.form.getlist('check')
-            ### id값 데이터베이스로 넘기고 수정하는것만 하면됨.
 
     return render_template('search.html', data=data)    
+
 
 if __name__ == '__main__':
     app.run()
