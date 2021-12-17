@@ -7,7 +7,7 @@ import json
 app = Flask(__name__)
 app.secret_key = '1234'
 
-@app.route('/manage/search', methods = ['GET', 'POST'])
+@app.route('/main/search', methods = ['GET', 'POST'])
 def search():
     data = None
     if request.method == 'POST':
