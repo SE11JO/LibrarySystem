@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, session
+from datetime import date
 import boto3
 import controller
 import json
@@ -6,16 +7,6 @@ import json
 dynamodb_client = boto3.client('dynamodb', region_name = 'ap-northeast-2')
 
 app = Flask(__name__)
-
-@app.route('/rental', methods=['GET'])
-def rental_book():
-    response = controller.check_rental_possible(session['user'])
-
-    if response['Item']['rental']:
-        response = controller.change_rental_status(session['user'])
-        return '대여 되었습니다'
-    
-    return '대여가 불가능 합니다' 
 
 @app.route('/return_book', methods=['GET', 'POST'])
 def return_book():

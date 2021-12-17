@@ -16,37 +16,6 @@ resource = resource(
 
 table = resource.Table('Library')
 
-def check_rental_possible(title):
-    response = table.get_item(
-        Key = {
-            'title'    :title
-        },
-        AttributesToGet=[
-            'rental'
-        ]
-    )
-    return response
-    #렌탈 가능할때 true
-
-def change_rental_status(title, ren_name):
-    response = table.update_item(
-        Key = {
-            'title'    :title
-        },
-
-        AttributeUpdates = {
-            'rental' : {
-                'Value'     : False,
-                'Action'    : 'PUT'
-            },
-            'ren_name' : {
-                'Value'     : ren_name,
-                'Action'    : 'PUT'
-            }
-        }
-    )
-    return response
-
 def return_book(title):
     response = table.update_item(
         Key = {
