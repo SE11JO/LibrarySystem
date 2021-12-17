@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>책 수정 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <style>
+        a:link {
+            text-decoration: none;
+            text-shadow: 0 0 24px;
+        }
+        #input2 {
+            border: 3px solid black;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>수정할 정보를 입력하세요</h1>
+    <form action="/update_db" method="POST">
+        <table class="table table-hover my-2" border="3">
+            <input type="hidden" name="c_title" value="{{ title }}">
+            <tr class="table-secondary" align="center">
+                <td>책 ID</td>
+                <td><input type="text" name="id"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>책 이름</td>
+                <td><input type="text" name="title"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>책 저자</td>
+                <td><input type="text" name="author"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>출판사</td>
+                <td><input type="text" name="publish"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>대여 여부</td>
+                <td><input type="radio" value="True" name="rental" checked>가능
+                    <input type="radio" value="False" name="rental">불가능
+                </td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>대여 날짜</td>
+                <td><input type="date" name="ren_date"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>대여자 이름</td>
+                <td><input type="text" name="ren_name"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td colspan="2"><input id="input2" type="submit" value="수정"></td>
+            </tr>
+        </table>
+    </form>
+
+    <a href="{{ url_for('delete_db', d_title=title) }}">삭제</a>
+</body>
+
+</html>

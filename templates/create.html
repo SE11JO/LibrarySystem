@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>책 생성 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+</head>
+
+<body>
+    <h1>책 정보를 입력하세요</h1>
+    
+    <form action="/insert_db" method="post">
+        <table class="table table-hover my-2" border="3">
+            <tr class="table-secondary" align="center">
+                <td>책 ID</td>
+                <td><input type="text" name="id"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>책 이름</td>
+                <td><input type="text" name="title"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>책 저자</td>
+                <td><input type="text" name="author"></td>
+            </tr>
+            <tr class="table-secondary" align="center">
+                <td>출판사</td>
+                <td><input type=" text" name="publish"></td>
+            </tr>
+        </table>
+        <input class="btn btn-secondary my-2 my-sm-0" type="submit" value="추가">
+    </form>
+</body>
+
+</html>

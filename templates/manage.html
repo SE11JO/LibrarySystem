@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>도서관 책 리스트 페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <style>
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>보유 책 리스트</h1>
+        <form action="/manage/update" method="POST">
+        <table class="table table-hover my-2" border="3">
+            <tr class="table-secondary" align="center">
+                <td></td>
+                <td>책 ID</td>
+                <td>책 이름</td>
+                <td>저자</td>
+                <td>출판사</td>
+                <td>대여 여부</td>
+                <td>대여 일자</td>
+                <td>대여한 사람</td>
+                <td></td>
+            </tr>
+            {% for c in object %}
+            <tr align="center">
+                <td><input type="checkbox" name="c_title" value="{{ c.title }}"></td>
+                <td>{{ c.id }}</td>
+                <td>{{ c.title }}</td>
+                <td>{{ c.author }}</td>
+                <td>{{ c.publish }}</td>
+                <td>{{ c.rental }}</td>
+                <td>{{ c.ren_date }}</td>
+                <td>{{ c.ren_name }}</td>
+                <td><button class="btn btn-secondary my-2 my-sm-0">수정</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    <button class="btn btn-secondary my-2 my-sm-0" onclick="location.href='/manage/create'">생성</button>
+    <button class="btn btn-secondary my-2 my-sm-0" onclick="location.href='/'">돌아가기</button>
+</body>
+
+</html>
