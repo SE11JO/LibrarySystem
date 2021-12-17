@@ -3,15 +3,48 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>책 관리 페이지</title>
+    <title>도서관 책 리스트 페이지</title>
+    <style>
+        td {
+            padding: 5px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>관리 메뉴</h1>
-    <ul>
-        <li><a href="/create_book">책 추가</a></li>
-        <li><a href="/list_book">책 정보 수정 및 삭제</a></li>
-    </ul>
+    <h1>보유 책 리스트</h1>
+    <div>
+        <button onclick="location.href='/manage/create'">생성</button>
+    </div>
+    <form action="manage/update" methods="GET">
+        <table border="2">
+            <tr align="center">
+                <td></td>
+                <td>책 ID</td>
+                <td>책 이름</td>
+                <td>저자</td>
+                <td>출판사</td>
+                <td>대여 여부</td>
+                <td>대여 일자</td>
+                <td>대여한 사람</td>
+            </tr>
+            {% for c in object %}
+            <tr align="center">
+                <td><input type="checkbox" name="c_id" value="{{ c.id }}"></td>
+                <td>{{ c.id }}</td>
+                <td>{{ c.title }}</td>
+                <td>{{ c.author }}</td>
+                <td>{{ c.publish }}</td>
+                <td>{{ c.rental }}</td>
+                <td>{{ c.ren_date }}</td>
+                <td>{{ c.ren_name }}</td>
+                <td><button>수정</button></td>
+                <td><button onclick="location.href='/manage/delete?'">삭제</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+    <button onclick="location.href='/'">돌아가기</button>
 </body>
 
 </html>
