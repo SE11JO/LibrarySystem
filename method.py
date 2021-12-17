@@ -1,6 +1,7 @@
 from pprint import pprint
 import boto3
 import json
+import config
 from botocore.exceptions import ClientError
 from flask.templating import render_template
 from flask.wrappers import Response
@@ -8,14 +9,17 @@ from werkzeug.wrappers import response
 from flask import jsonify
 from boto3.dynamodb.conditions import Key, Attr
 
+AWS_ACCESS_KEY_ID = config.AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = config.AWS_SECRET_ACCESS_KEY
+REGION_NAME = config.REGION_NAME
 
 def put_table(id, title, author, publish, dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
-            aws_access_key_id='AKIARKVEYCRB5V6OTNXL',
-            aws_secret_access_key='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',
-            region_name='ap-northeast-2')
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=REGION_NAME)
 
     table = dynamodb.Table('library')
     response = table.put_item(
@@ -37,9 +41,9 @@ def get_table(dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
-            aws_access_key_id='AKIARKVEYCRB5V6OTNXL',
-            aws_secret_access_key='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',
-            region_name='ap-northeast-2')
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=REGION_NAME)
 
     response = dynamodb.Table('library')
 
@@ -50,9 +54,9 @@ def select_all(dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
-            aws_access_key_id='AKIARKVEYCRB5V6OTNXL',
-            aws_secret_access_key='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',
-            region_name='ap-northeast-2')
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=REGION_NAME)
 
     table = dynamodb.Table('library')
     response = table.scan()
@@ -65,9 +69,9 @@ def update_table(b_title, id, title, author, publish, rental, ren_date, ren_name
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
-            aws_access_key_id='AKIARKVEYCRB5V6OTNXL',
-            aws_secret_access_key='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',
-            region_name='ap-northeast-2')
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=REGION_NAME)
 
     table = dynamodb.Table('library')
     print(b_title)
@@ -110,9 +114,9 @@ def get_book(title, dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
-            aws_access_key_id='AKIARKVEYCRB5V6OTNXL',
-            aws_secret_access_key='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',
-            region_name='ap-northeast-2')
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=REGION_NAME)
 
     table = dynamodb.Table('library')
 
@@ -128,9 +132,9 @@ def delete_table(title, dynamodb=None):
     if not dynamodb:
         dynamodb = boto3.resource(
             'dynamodb',
-            aws_access_key_id='AKIARKVEYCRB5V6OTNXL',
-            aws_secret_access_key='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',
-            region_name='ap-northeast-2')
+            aws_access_key_id=AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+            region_name=REGION_NAME)
 
     table = dynamodb.Table('library')
 

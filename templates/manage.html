@@ -1,3 +1,10 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <script type="text/javascript">
+            alert("{{ messages[-1] }}")
+        </script>
+    {% endif %}
+{% endwith %}
 <!DOCTYPE html>
 <html>
 
@@ -14,7 +21,7 @@
 
 <body>
     <h1>보유 책 리스트</h1>
-        <form action="/manage/update" method="POST">
+    <form action="/manage/update" method="POST">
         <table class="table table-hover my-2" border="3">
             <tr class="table-secondary" align="center">
                 <td></td>

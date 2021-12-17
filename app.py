@@ -1,5 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from boto3.dynamodb.conditions import Key, Attr
+from flask.helpers import url_for
+from werkzeug.utils import redirect
 import method as met
 from pprint import pprint
 import boto3
@@ -11,7 +13,7 @@ from flask import jsonify
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
-
+app.config["SECRET_KEY"] = "ABCD"
 
 @app.route('/')
 def main():
@@ -42,10 +44,11 @@ def insert_db():
 
 @app.route('/manage/update', methods=["POST", "GET"])
 def update():
-    title = request.form["c_title"]
+    title = request.form.get('c_title', False)
     print(title)
-    if title==None:
-        return render_template('manage.html')
+    if title==False:
+        flash("책을 선택하세요!")
+        return redirect(url_for('manage'))
 
     response = met.get_book(title)
     json_string = json.dumps(response, ensure_ascii=False)
